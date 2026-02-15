@@ -1,127 +1,58 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>General Gold</title>
+<title>جينرال غولد - تفاعلي</title>
 <style>
-body{
-    font-family: Arial, sans-serif;
-    background:#0f0f0f;
-    color:white;
-    margin:0;
-    padding:20px;
-    text-align:center;
-}
-.container{
-    max-width:400px;
-    margin:auto;
-    background:#1c1c1c;
-    padding:20px;
-    border-radius:15px;
-    box-shadow:0 0 20px rgba(255,215,0,0.3);
-}
-h1{
-    color:#FFD700;
-}
-.price{
-    font-size:22px;
-    margin:15px 0;
-}
-button{
-    width:100%;
-    padding:12px;
-    margin:8px 0;
-    border:none;
-    border-radius:10px;
-    font-size:16px;
-    cursor:pointer;
-}
-.discount{ background:#00c853; color:white; }
-.staff{ background:#2962ff; color:white; }
-.follow{ background:#000000; color:white; border:1px solid #FFD700;}
-.admin{ background:#FFD700; color:black;}
-.hidden{ display:none; }
-input{
-    width:90%;
-    padding:8px;
-    margin:5px 0;
-    border-radius:8px;
-    border:none;
-    text-align:center;
-}
+body { font-family: Arial; direction: rtl; padding: 20px; background: #f0f0f0;}
+.button { padding: 10px 20px; margin: 10px; background: #007bff; color: white; border: none; cursor: pointer;}
+.button:hover { background: #0056b3;}
+.card { background: white; padding: 15px; border-radius: 8px; margin: 10px 0;}
 </style>
 </head>
 <body>
 
-<div class="container">
+<h1>جينرال غولد - التفاعلي</h1>
 
-<h1>غسالة جنرال جولد 12 كيلو</h1>
-
-<div class="price">
-السعر بالدولار: <span id="usdPrice">500</span> $
+<div class="card">
+  <h3>السعر:</h3>
+  <p>بالدولار: <span id="usdPrice">---</span></p>
+  <p>بالليرة: <span id="sypPrice">---</span></p>
+  <button class="button" onclick="updatePrice()">تحديث السعر</button>
 </div>
 
-<div class="price">
-السعر بالليرة: <span id="sypPrice"></span> ل.س
+<div class="card">
+  <h3>خصم متابعة إنستا:</h3>
+  <button class="button" onclick="followInsta()">تابع الإنستا واحصل على خصم</button>
+  <p id="discountMsg"></p>
 </div>
 
-<button class="discount" onclick="getDiscount()">احصل على خصم</button>
-<button class="staff" onclick="callStaff()">أحتاج موظف</button>
-<button class="follow" onclick="followPage()">تابعنا على انستغرام</button>
-
-<hr>
-
-<button class="admin" onclick="showAdmin()">تعديل سعر الصرف</button>
-
-<div id="adminPanel" class="hidden">
-<input type="password" id="adminPass" placeholder="كلمة السر">
-<input type="number" id="newRate" placeholder="سعر الصرف الجديد">
-<button onclick="updateRate()">تحديث</button>
-</div>
-
+<div class="card">
+  <h3>احتاج موظف:</h3>
+  <button class="button" onclick="callEmployee()">إرسال إشعار للموظف</button>
+  <p id="employeeMsg"></p>
 </div>
 
 <script>
-
-let exchangeRate = localStorage.getItem("rate") || 15000;
-let usd = 500;
-
+// مثال لتحديث السعر تلقائياً
 function updatePrice(){
-    document.getElementById("sypPrice").innerText = (usd * exchangeRate).toLocaleString();
-}
-updatePrice();
-
-function getDiscount(){
-    alert("تم تفعيل خصم 3% عند الكاشير لمدة 30 دقيقة 🔥");
+    let usd = (Math.random()*100 + 50).toFixed(2); // سعر افتراضي بالدولار
+    let syp = (usd * 3000).toFixed(0); // حسب سعر الصرف تقريبا
+    document.getElementById('usdPrice').textContent = usd + ' $';
+    document.getElementById('sypPrice').textContent = syp + ' ل.س';
 }
 
-function callStaff(){
-    alert("تم إرسال طلب لموظف الطابق ✔️");
+// متابعة الإنستا
+function followInsta(){
+    document.getElementById('discountMsg').textContent = 'تهانينا! حصلت على خصم 10%!';
 }
 
-function followPage(){
-    window.location.href="https://instagram.com/";
+// إشعار الموظف
+function callEmployee(){
+    document.getElementById('employeeMsg').textContent = 'تم إرسال إشعار للموظف!';
+    // لاحقاً ممكن نضيف اتصال API أو إشعار حقيقي
 }
-
-function showAdmin(){
-    document.getElementById("adminPanel").classList.toggle("hidden");
-}
-
-function updateRate(){
-    let pass = document.getElementById("adminPass").value;
-    if(pass === "2030"){
-        exchangeRate = document.getElementById("newRate").value;
-        localStorage.setItem("rate", exchangeRate);
-        updatePrice();
-        alert("تم تحديث السعر بنجاح");
-    } else {
-        alert("كلمة السر خطأ");
-    }
-}
-
 </script>
 
 </body>
 </html>
-
