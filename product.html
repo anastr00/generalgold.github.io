@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>General Gold</title>
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#0f0f0f;
+    color:white;
+    margin:0;
+    padding:20px;
+    text-align:center;
+}
+.container{
+    max-width:400px;
+    margin:auto;
+    background:#1c1c1c;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 0 20px rgba(255,215,0,0.3);
+}
+h1{
+    color:#FFD700;
+}
+.price{
+    font-size:22px;
+    margin:15px 0;
+}
+button{
+    width:100%;
+    padding:12px;
+    margin:8px 0;
+    border:none;
+    border-radius:10px;
+    font-size:16px;
+    cursor:pointer;
+}
+.discount{ background:#00c853; color:white; }
+.staff{ background:#2962ff; color:white; }
+.follow{ background:#000000; color:white; border:1px solid #FFD700;}
+.admin{ background:#FFD700; color:black;}
+.hidden{ display:none; }
+input{
+    width:90%;
+    padding:8px;
+    margin:5px 0;
+    border-radius:8px;
+    border:none;
+    text-align:center;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h1>غسالة جنرال جولد 12 كيلو</h1>
+
+<div class="price">
+السعر بالدولار: <span id="usdPrice">500</span> $
+</div>
+
+<div class="price">
+السعر بالليرة: <span id="sypPrice"></span> ل.س
+</div>
+
+<button class="discount" onclick="getDiscount()">احصل على خصم</button>
+<button class="staff" onclick="callStaff()">أحتاج موظف</button>
+<button class="follow" onclick="followPage()">تابعنا على انستغرام</button>
+
+<hr>
+
+<button class="admin" onclick="showAdmin()">تعديل سعر الصرف</button>
+
+<div id="adminPanel" class="hidden">
+<input type="password" id="adminPass" placeholder="كلمة السر">
+<input type="number" id="newRate" placeholder="سعر الصرف الجديد">
+<button onclick="updateRate()">تحديث</button>
+</div>
+
+</div>
+
+<script>
+
+let exchangeRate = localStorage.getItem("rate") || 15000;
+let usd = 500;
+
+function updatePrice(){
+    document.getElementById("sypPrice").innerText = (usd * exchangeRate).toLocaleString();
+}
+updatePrice();
+
+function getDiscount(){
+    alert("تم تفعيل خصم 3% عند الكاشير لمدة 30 دقيقة 🔥");
+}
+
+function callStaff(){
+    alert("تم إرسال طلب لموظف الطابق ✔️");
+}
+
+function followPage(){
+    window.location.href="https://instagram.com/";
+}
+
+function showAdmin(){
+    document.getElementById("adminPanel").classList.toggle("hidden");
+}
+
+function updateRate(){
+    let pass = document.getElementById("adminPass").value;
+    if(pass === "2030"){
+        exchangeRate = document.getElementById("newRate").value;
+        localStorage.setItem("rate", exchangeRate);
+        updatePrice();
+        alert("تم تحديث السعر بنجاح");
+    } else {
+        alert("كلمة السر خطأ");
+    }
+}
+
+</script>
+
+</body>
+</html>
