@@ -1,0 +1,2 @@
+# generalgold.github.io
+generalgold
